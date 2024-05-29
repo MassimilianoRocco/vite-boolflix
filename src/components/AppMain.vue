@@ -3,18 +3,44 @@
 import store from '../data/store.js';
 import Cards from './Cards.vue';
 
+import axios from 'axios';
+
     export default {
         components: {
-        Cards
+            Cards,
     },
 
   data() {
     return {
       store,
+      userSearch:"",
     }
   },
   methods: {
+    getMovies(){
+        
+        const options = {
+        method: 'GET',
+        url: 'https://api.themoviedb.org/3/search/movie',
+        params: {query: this.userSearch, include_adult: 'true', language: 'it-IT', page: '1'},
+        headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MzE5MmFlYjcyZDY5NDI1MGFkYzYxODJhOTk1NmVjMyIsInN1YiI6IjY2NTcwYWQ1ZmVlNjZlZmZiNWU0ZTUxNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.pOvQ1OKAYU2WHehpISSAFEQetdRMxLF2-h2lW5U6Szo'
+        }
+        };
 
+        axios
+        .request(options)
+        .then(function (response) {
+            console.log(response.data);
+            console.log(this.store.Movies)  //Cannot read properties of undefined (reading 'store')
+            // this.store.Movies = response.data;
+        })
+        .catch(function (error) {
+            console.error(error);
+        });
+
+    }
   },
   computed: {
    
@@ -32,14 +58,16 @@ import Cards from './Cards.vue';
 <!-- TEMPLATE -->
 <template>
     <div class="row">
+
+        <div class="utility_col">
+            <div class="search_box">
+                <input type="text" v-model="userSearch" @keyup.enter="getMovies()" placeholder="Search...">
+            </div>
+        </div>
+
+
         <div class="card_col">
-            <div class="card">CARD</div>
-            <div class="card">CARD</div>
-            <div class="card">CARD</div>
-            <div class="card">CARD</div>
-            <div class="card">CARD</div>
-            <div class="card">CARD</div>
-            <div class="card">CARD</div>
+            <div v-for="card in store.Movies" class="card">{{ card.page }}</div>
         </div>
     </div>
    

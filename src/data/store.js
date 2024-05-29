@@ -2,8 +2,8 @@ import { reactive } from 'vue';
 
 const iMieiDati = reactive({
 
-    cards: [],
-    archetypeList: [],
+    Movies: [],
+    Series: [],
         
        
 });
