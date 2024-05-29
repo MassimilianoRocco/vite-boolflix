@@ -7,11 +7,14 @@
       },
   data() {
     return {
-      standardUrl: 'https://api.themoviedb.org/3/search/movie',
+      standardUrl: 'https://image.tmdb.org/t/p/w185',
     }
   },
   methods: { 
-        
+        getImage(){
+            let url = this.standardUrl + this.singleMovie.poster_path;
+            return url;
+        }
   },
   created() {
    
@@ -26,7 +29,7 @@
 <!-- TEMPLATE -->
 <template>
     <div class="card">
-        <!-- <img :src="singleMovie.poster_path"> -->
+        <img :src="getImage()" alt="movie img">
         <p>{{singleMovie.original_title ?  singleMovie.original_title : 'No Name'}}</p>
     </div>
 </template>
@@ -37,5 +40,10 @@
         width: calc(100% / 6);
         margin-top: 0.5rem;
         text-align: center;
+    }
+    .card img{
+        width: 100%;
+        height: 80%;
+        object-fit: cover;
     }
 </style>
