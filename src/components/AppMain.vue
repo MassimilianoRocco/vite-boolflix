@@ -67,7 +67,7 @@ import axios from 'axios';
 
 
         <div class="card_col">
-            <div v-for="card in store.Movies" class="card">{{ card.original_title }}</div>
+            <Cards v-for="card in store.Movies" :singleMovie="card"/>
         </div>
     </div>
    
@@ -89,10 +89,5 @@ import axios from 'axios';
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-start;
-    }
-    .card{
-        width: calc(100% / 6);
-        margin-top: 0.5rem;
-        text-align: center;
     }
 </style>
