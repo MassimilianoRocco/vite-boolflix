@@ -22,7 +22,7 @@ import axios from 'axios';
         const options = {
         method: 'GET',
         url: 'https://api.themoviedb.org/3/search/movie',
-        params: {query: this.userSearch, include_adult: 'true', language: 'it-IT', page: '1'},
+        params: {query: this.userSearch, include_adult: 'true', language: 'en-US', page: '1'},
         headers: {
             accept: 'application/json',
             Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MzE5MmFlYjcyZDY5NDI1MGFkYzYxODJhOTk1NmVjMyIsInN1YiI6IjY2NTcwYWQ1ZmVlNjZlZmZiNWU0ZTUxNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.pOvQ1OKAYU2WHehpISSAFEQetdRMxLF2-h2lW5U6Szo'
@@ -33,8 +33,8 @@ import axios from 'axios';
         .request(options)
         .then(function (response) {
             console.log(response.data);
-            console.log(this.store.Movies)  //Cannot read properties of undefined (reading 'store')
-            // this.store.Movies = response.data;
+            store.Movies = response.data.results;
+            console.log(store)  //Con l'arrow function e i "this." errori vari
         })
         .catch(function (error) {
             console.error(error);
@@ -67,7 +67,7 @@ import axios from 'axios';
 
 
         <div class="card_col">
-            <div v-for="card in store.Movies" class="card">{{ card.page }}</div>
+            <div v-for="card in store.Movies" class="card">{{ card.original_title }}</div>
         </div>
     </div>
    
@@ -93,5 +93,6 @@ import axios from 'axios';
     .card{
         width: calc(100% / 6);
         margin-top: 0.5rem;
+        text-align: center;
     }
 </style>
