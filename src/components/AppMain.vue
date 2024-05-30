@@ -34,10 +34,11 @@ import Cards from './Cards.vue';
     <div class="row">
 
         <div class="card_col">
-            <Cards v-for="card in store.Movies" :singleMovie="card"/>
+            <Cards v-if="store.isMovie==true" v-for="card in store.Movies" :singleMovie="card"/>
+            <Cards v-else v-for="card in store.Series" :singleMovie="card"/>
         </div>
     </div>
-   
+    
 </template>
 
 

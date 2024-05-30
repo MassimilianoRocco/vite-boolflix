@@ -1,5 +1,6 @@
 <!-- SCRIPT -->
 <script>
+    import store from '../data/store.js';
 
     export default {
       name: "Cards",
@@ -9,6 +10,7 @@
   data() {
     return {
       standardUrl: 'https://image.tmdb.org/t/p/w185',
+      store,
     }
   },
 
@@ -31,7 +33,7 @@
           let num;
           let roundedNum;
           if(this.singleMovie.vote_average){
-            num = this.singleMovie.vote_average;
+            num = this.singleMovie.vote_average / 2;
             roundedNum = Math.round(num * 10) / 10
 
             return roundedNum;
@@ -55,11 +57,25 @@
 <template>
     <div class="card">
       <div class="movie_info_box">
-      <img :src="getImage()"  alt="movie img">
-        <p>Title: {{singleMovie.title ?  singleMovie.title : 'No Name'}}</p>
-        <p>Original Title: {{singleMovie.original_title ?  singleMovie.original_title : 'No Name'}}</p>
-        <p>Language: {{singleMovie.original_language ?  singleMovie.original_language : 'No Lang'}}</p>
-        <p><i class="fa-solid fa-star" style="color: #FFD43B;"></i> {{getFixedVote()}}</p>
+      <img v-if="store.isMovie==true" :src="getImage()"  alt="movie img">
+      <img v-else :src="getImage()"  alt="movie img">
+
+        <p v-if="store.isMovie==true">Title: {{singleMovie.title ?  singleMovie.title : 'No Name'}}</p>
+        <p v-else>Title: {{singleMovie.name ?  singleMovie.name : 'No Name'}}</p>
+
+        <p v-if="store.isMovie==true">Original Title: {{singleMovie.original_title ?  singleMovie.original_title : 'No Name'}}</p>
+        <p v-else>Original Name: {{singleMovie.original_name ?  singleMovie.original_name : 'No Name'}}</p>
+
+
+        <p v-if="store.isMovie==true">Language: {{singleMovie.original_language ?  singleMovie.original_language : 'No Lang'}}</p>
+        <p v-else>Language: {{singleMovie.original_language ?  singleMovie.original_language : 'No Lang'}}</p>
+
+
+        <p v-if="store.isMovie==true"><i class="fa-solid fa-star" style="color: #FFD43B;"></i> {{getFixedVote()}}</p>
+        <p v-else>
+          <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+           {{getFixedVote()}}
+        </p>
       </div>
     </div>
 </template>

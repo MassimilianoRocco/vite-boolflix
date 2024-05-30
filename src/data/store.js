@@ -4,6 +4,7 @@ const iMieiDati = reactive({
 
     Movies: [],
     Series: [],
+    isMovie: true,
         
        
 });
