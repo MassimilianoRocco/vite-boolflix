@@ -1,20 +1,78 @@
 <!-- SCRIPT -->
 <script>
+    import axios from 'axios';
+    import store from '../data/store.js';
+
     export default {
 
   data() {
     return {
-      
+        userSearch:"",
     }
   },
   methods: {
 
+    // GETALLMOVIES ON CREATED
+    getAllMovies(){
+        const options = {
+        method: 'GET',
+        url: 'https://api.themoviedb.org/3/movie/popular',
+        params: {include_adult: 'true', language: 'en-US', page: '1'},
+        headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MzE5MmFlYjcyZDY5NDI1MGFkYzYxODJhOTk1NmVjMyIsInN1YiI6IjY2NTcwYWQ1ZmVlNjZlZmZiNWU0ZTUxNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.pOvQ1OKAYU2WHehpISSAFEQetdRMxLF2-h2lW5U6Szo'
+        }
+        };
+
+        axios
+        .request(options)
+        .then(function (response) {
+            console.log(response.data);
+            store.Movies = response.data.results;
+            console.log(store)  //Con l'arrow function e i "this." errori vari
+        })
+        .catch(function (error) {
+            console.error(error);
+        });
+    },
+
+    // GETMOVIES ON SEARCH
+    getMovies(){
+        
+        if(this.userSearch){
+            const options = {
+            method: 'GET',
+            url: 'https://api.themoviedb.org/3/search/movie',
+            params: {query: this.userSearch, include_adult: 'true', language: 'en-US', page: '1'},
+            headers: {
+                accept: 'application/json',
+                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3MzE5MmFlYjcyZDY5NDI1MGFkYzYxODJhOTk1NmVjMyIsInN1YiI6IjY2NTcwYWQ1ZmVlNjZlZmZiNWU0ZTUxNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.pOvQ1OKAYU2WHehpISSAFEQetdRMxLF2-h2lW5U6Szo'
+            }
+            };
+
+            axios
+            .request(options)
+            .then(function (response) {
+                console.log(response.data);
+                store.Movies = response.data.results;
+                console.log(store)  //Con l'arrow function e i "this." errori vari
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+        }
+        else{
+            this.getAllMovies();
+        }
+
+    } 
+
   },
   created() {
-   
-  },
-  mounted() {
-
+    this.getAllMovies()
+},
+mounted() {
+    
   }
 }
 </script>
@@ -28,7 +86,7 @@
     </div>
     <div class="utility_col">
         <div class="search_box">
-            <input type="text" placeholder="Search...">
+            <input type="text" v-model="userSearch" @keyup.enter="getMovies()" placeholder="Search...">
         </div>
     </div>
 </div>
@@ -58,7 +116,7 @@
 }
 
 .search_box input{
-    border-radius: 10px;
+    border-radius: 15px;
     padding: 0.5rem;
     width: 150px;
 }
