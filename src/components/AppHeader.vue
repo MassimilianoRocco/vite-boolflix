@@ -187,9 +187,13 @@ mounted() {
 }
 
 .search_box input{
-    border-radius: 1px;
+    border-radius: 10px;
     padding: 0.5rem;
     margin-right: 1rem;
     width: 150px;
+}
+input[type=text]:focus {
+  width: 300px;
+  transition: width 0.4s ease-in-out;
 }
 </style>

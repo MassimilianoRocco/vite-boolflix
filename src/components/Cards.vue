@@ -10,6 +10,13 @@
   data() {
     return {
       standardUrl: 'https://image.tmdb.org/t/p/w185',
+      lang: {
+        "en": "https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg",
+        "it": "https://upload.wikimedia.org/wikipedia/commons/0/03/Flag_of_Italy.svg",
+        "fr": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg",
+      },
+      flagChecked:true,
+
       store,
     }
   },
@@ -41,7 +48,17 @@
           else{
             return "Not enough votes";
           }
-        }
+        },
+
+        getFlag(){
+          if((Object.keys(this.lang)).includes(this.singleMovie.original_language)){
+            this.flagChecked = true;
+            return this.lang[this.singleMovie.original_language];
+          }
+          else{
+            this.flagChecked = false;
+          }
+        },
   },
   created() {
    
@@ -61,8 +78,8 @@
 
       <!-- IMG 1:MOVIE  2:TV SERIES -->
       <div class="movie_info_box">
-        <img v-if="store.isMovie==true" :src="getImage()"  alt="movie img">
-        <img v-else :src="getImage()"  alt="movie img">
+        <img v-if="store.isMovie==true" :src="getImage()"  alt="movie img" class="back_img">
+        <img v-else :src="getImage()"  alt="movie img" class="back_img">
 
         <div class="text_box">
 
@@ -79,22 +96,29 @@
             <p v-else><b>Description: </b><br><span class="text_from_data">{{singleMovie.overview ?  singleMovie.overview : 'No Description'}}</span></p>
 
             <!-- Lang -->
-            <p v-if="store.isMovie==true"><b>Language: </b><span class="text_from_data">{{singleMovie.original_language ?  singleMovie.original_language : 'No Lang'}}</span></p>
-            <p v-else><b>Language: </b><span class="text_from_data">{{singleMovie.original_language ?  singleMovie.original_language : 'No Lang'}}</span></p>
+            <p v-if="store.isMovie==true" class="flag_box">
+              <b>Language: </b>
+              <img v-show="this.flagChecked==true" class="flag" :src="getFlag()" alt="flag">
+              <span v-show="this.flagChecked==false">{{ this.singleMovie.original_language }}</span>
+            </p>
+            <p v-else class="flag_box">
+              <b>Language: </b>
+              <img v-show="this.flagChecked==true" class="flag" :src="getFlag()" alt="flag">
+              <span v-show="this.flagChecked==false">{{ this.singleMovie.original_language }}</span>
+            </p>
 
             <!-- Rating -->
             <p v-if="store.isMovie==true"> <b>Rating: </b>
               <span v-for="elemento in 5">
                 <span v-show="getFixedVote()>=elemento"><i class="fa-solid fa-star" style="color: #FFD43B;"></i></span>
               </span>
-          </p>
-            <p v-else>  <b>Rating: </b>
+            </p>
+            <p v-else>  <b>Rating: </b> 
               <span v-for="elemento in 5">
                 <span v-show="getFixedVote()>=elemento"><i class="fa-solid fa-star" style="color: #FFD43B;"></i></span>
               </span>
-          </p>
-
-            
+            </p>
+         
         </div>
       </div>
     </div>
@@ -111,7 +135,7 @@
         position: relative;
         cursor: pointer;
     }
-    .card img{
+    .card .back_img{
         width: 100%;
         height: 100%;
         display: block;
@@ -139,7 +163,7 @@
       overflow: auto;
       font-size: 0.9rem;
     }
-    .card:hover img{
+    .card:hover .back_img{
       filter: opacity(30%);
       transition: 1s;   
     }
@@ -150,6 +174,10 @@
 
     .text_from_data{
       color: rgb(218, 216, 216);
+    }
+
+    .flag_box>.flag{
+      width: 25px;
     }
 
 
