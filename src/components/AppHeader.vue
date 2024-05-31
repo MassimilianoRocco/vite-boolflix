@@ -166,16 +166,17 @@ mounted() {
 }
 .text_col{
     width: 50%;
-    color: white;
     display: flex;
     align-items: center;
 }
 .text_col>h1{
     margin-right: 4rem;
+    color: #E50914;
 }
 .text_col h4{
     margin: 0 1rem;
     cursor: pointer;
+    color: white;
 }
 
 .utility_col{
@@ -186,8 +187,9 @@ mounted() {
 }
 
 .search_box input{
-    border-radius: 15px;
+    border-radius: 1px;
     padding: 0.5rem;
+    margin-right: 1rem;
     width: 150px;
 }
 </style>

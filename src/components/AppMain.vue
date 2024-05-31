@@ -48,7 +48,7 @@ import Cards from './Cards.vue';
         width: 100%;
         height: calc(100vh - 100px);
         padding: 0 1rem;
-        background-color: darkgray;
+        background-color: rgb(80, 76, 76);
     }
     .card_col{
         width: 100%;

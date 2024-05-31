@@ -31,9 +31,10 @@ export default {
 
 <!-- TEMPLATE -->
 <template>
+
   <AppHeader/>
   <AppMain/>
-
+  
 </template>
 
 
