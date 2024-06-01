@@ -129,11 +129,15 @@
 
 <!-- STYLE -->
 <style scoped>
-     .card{
+    .card{
         width: calc((100% / 6));
         padding: 1rem;
         position: relative;
         cursor: pointer;
+        transition: all 0.5s ease-in-out;
+    }
+    .card:hover{
+      transform: scale(1.1,1.1)
     }
     .card .back_img{
         width: 100%;
